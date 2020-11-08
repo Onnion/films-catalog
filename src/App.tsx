@@ -1,10 +1,13 @@
 import React from 'react';
+import Routes from './routes';
+import { Body } from './styles';
 
-function App() {
+export const App: React.FC = () => {
   return (
-    <div className="App">
-    </div>
-  );
+    <>
+      <Body>
+        < Routes />
+      </Body>
+    </>
+  )
 }
-
-export default App;

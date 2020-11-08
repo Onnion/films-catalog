@@ -1,9 +1,12 @@
 :root {
   --main-color: #116193;
-  --secondary-color: #08a4bb;
+  --secondary-color: #00e8e4;
   --white: #ffffff;
+  --gray: #555555;
   --light-gray: #ebebeb;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Lato:wght@300&display=swap');
 
 * {
   margin: 0;
@@ -13,4 +16,6 @@
 html {
   font-size: 16px;
   background-color: var(--white);
+  color: var(--gray);
+  font-family: 'Lato', sans-serif;
 }
