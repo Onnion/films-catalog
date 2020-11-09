@@ -8,6 +8,7 @@ export interface MoviesContextProps {
     genres: Genrer[];
     loadMovies: () => void;
     loadDetail: (id: number) => void;
+    searchMovies: (keyword: string) => void;
     cleanMovieDetail: () => void;
 }
 export interface PaginateContextProps {
@@ -62,6 +63,30 @@ const MoviesProvider = ({ children }: MoviesProviderProps) => {
         }
     }
 
+    async function searchMovies(keyword = '') {
+        try {
+            const genres = await loadGenrers() as Genrer[];
+            const url = `${config.baseURL}/search/movie?api_key=${config.apiKey}&query=${keyword}&language=pt-BR`;
+            const response = await fetch(url);
+            const data: MovieResponse = await response.json();
+            const moviesWithGenres: MovieModel[] = data.results.map(movie => (
+                {
+                    ...movie,
+                    genres: movie.genre_ids.map(genrer_id => genres.find(genrer => genrer.id === genrer_id)) as Genrer[]
+                }
+            ));
+
+            setMovies(moviesWithGenres);
+            setPaginate({
+                page: data.page,
+                total_results: data.total_results,
+                total_pages: data.total_pages,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async function loadDetail(id: number) {
         try {
             const url = `${config.baseURL}/movie/${id}?api_key=${config.apiKey}&language=pt-BR`;
@@ -83,7 +108,7 @@ const MoviesProvider = ({ children }: MoviesProviderProps) => {
         return revenue - budge;
     }
 
-    const defaultValue: (MoviesContextProps & PaginateContextProps) = { movies, paginate, genres, movie, loadMovies, loadDetail, cleanMovieDetail };
+    const defaultValue: (MoviesContextProps & PaginateContextProps) = { movies, paginate, genres, movie, loadMovies, loadDetail, cleanMovieDetail, searchMovies };
 
     return (
         <MoviesContext.Provider value={defaultValue}>

@@ -9,7 +9,7 @@ export interface ConfigProps {
 }
 export interface ConfigContextProps {
     config: ConfigProps;
-    loadConfig: () => void
+    loadConfig: () => void;
 }
 
 export const ConfigContext = createContext<ConfigContextProps | null>(null);
