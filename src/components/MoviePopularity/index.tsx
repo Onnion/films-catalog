@@ -8,7 +8,7 @@ export interface MoviePopularityProps {
 export const MoviePopularity: React.FC<MoviePopularityProps> = (props: MoviePopularityProps) => {
     const { popularity } = props;
     return (
-        <Popularity>{popularity}%</Popularity>
+        <Popularity>{popularity.toFixed(0)}%</Popularity>
     );
 }
 

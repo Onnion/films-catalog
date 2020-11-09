@@ -2,7 +2,7 @@ import React from 'react';
 import MovieList from '../../components/MovieList';
 import { MainContent } from './styles';
 
-export const Home: React.FC = () => {
+export const Detail: React.FC = () => {
     return (
         <>
             <MainContent>
@@ -12,4 +12,4 @@ export const Home: React.FC = () => {
     );
 };
 
-export default Home;
+export default Detail;

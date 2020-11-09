@@ -18,5 +18,6 @@ export const Title = styled.div`
 `;
 
 export const ReleaseDate = styled.div`
+    padding-top: 3px;
     padding-left: calc(15px + 15px + 5rem);
 `;

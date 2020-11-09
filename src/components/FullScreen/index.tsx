@@ -2,7 +2,7 @@ import React from 'react';
 import { Full } from './styles';
 
 interface Props {
-    readonly children?: JSX.Element;
+    readonly children?: React.ReactNode;
 }
 
 export const FullScreen: React.FC<Props> = (props: Props) => {

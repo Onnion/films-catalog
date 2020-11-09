@@ -6,7 +6,7 @@
   --light-gray: #ebebeb;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Abel&family=Lato:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Abel&family=Lato:wght@300&display=swap");
 
 * {
   margin: 0;
@@ -17,5 +17,13 @@ html {
   font-size: 16px;
   background-color: var(--white);
   color: var(--gray);
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
+}
+
+a {
+  font-size: 16px;
+  background-color: var(--white);
+  color: var(--gray);
+  text-decoration: none;
+  font-family: "Lato", sans-serif;
 }
