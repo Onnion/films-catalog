@@ -24,7 +24,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Installation & Environments
 
-Copy `env.exemple.ts` to `src/configs/env.ts` and set environment variables then run following
+Copy `env.exemple.ts` to `src/env.ts` and set environment variables then run following
 
 ```bash
   $ yarn install
