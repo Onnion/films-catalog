@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useState } from 'react';
-import MovieModel, { Genrer, MovieResponse, Paginate } from '../../models/Movie';
+import MovieModel, { Genrer, MovieResponse, Paginate, Movie } from '../../models/Movie';
 import { ConfigContext, ConfigContextProps } from '../Config';
 export interface MoviesProviderProps { children: React.ReactNode }
 export interface MoviesContextProps {
     movies: MovieModel[];
+    movie: Movie | null;
     genres: Genrer[];
     loadMovies: () => void;
+    loadDetail: (id: number) => void;
+    cleanMovieDetail: () => void;
 }
 export interface PaginateContextProps {
     paginate?: Paginate;
@@ -15,6 +18,7 @@ export const MoviesContext = createContext<(MoviesContextProps & PaginateContext
 
 const MoviesProvider = ({ children }: MoviesProviderProps) => {
     const [movies, setMovies] = useState<MovieModel[]>([]);
+    const [movie, setMovie] = useState<Movie | null>(null);
     const [paginate, setPaginate] = useState<Paginate>();
     const [genres, setGenres] = useState<Genrer[]>([]);
     const { config } = useContext(ConfigContext) as ConfigContextProps;
@@ -33,10 +37,11 @@ const MoviesProvider = ({ children }: MoviesProviderProps) => {
         }
     }
 
-    async function loadMovies(keyword = 'jaws') {
+    async function loadMovies() {
         try {
             const genres = await loadGenrers() as Genrer[];
-            const url = `${config.baseURL}/search/movie?api_key=${config.apiKey}&query=${keyword}&language=pt-BR`;
+            // const url = `${config.baseURL}/search/movie?api_key=${config.apiKey}&query=${keyword}&language=pt-BR`;
+            const url = `${config.baseURL}/trending/movie/day?api_key=${config.apiKey}&language=pt-BR`;
             const response = await fetch(url);
             const data: MovieResponse = await response.json();
             const moviesWithGenres: MovieModel[] = data.results.map(movie => (
@@ -57,7 +62,28 @@ const MoviesProvider = ({ children }: MoviesProviderProps) => {
         }
     }
 
-    const defaultValue: (MoviesContextProps & PaginateContextProps) = { movies, loadMovies, paginate, genres };
+    async function loadDetail(id: number) {
+        try {
+            const url = `${config.baseURL}/movie/${id}?api_key=${config.apiKey}&language=pt-BR`;
+            const response = await fetch(url);
+            const movie: Movie = await response.json();
+            movie.profit = calcProfit(movie.revenue, movie.budget);
+
+            setMovie(movie);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function cleanMovieDetail(): void {
+        setMovie(null);
+    }
+
+    function calcProfit(revenue = 0, budge = 0): number {
+        return revenue - budge;
+    }
+
+    const defaultValue: (MoviesContextProps & PaginateContextProps) = { movies, paginate, genres, movie, loadMovies, loadDetail, cleanMovieDetail };
 
     return (
         <MoviesContext.Provider value={defaultValue}>

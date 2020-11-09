@@ -3,14 +3,13 @@ import styled from 'styled-components';
 export const Title = styled.div`
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    background: var(--main-color);
-    color: var(--secondary-color);
-    height: 4rem;
-    width: 100%;
+    justify-content: space-between;
+    background: var(--light-gray);
+    padding: 15px 30px;
 
     & > h1 {
-        padding-left: 15px;
+        color: var(--main-color);
+        font-size: 2.5rem;
         font-family: 'Abel', sans-serif;
         font-weight: 400;
     }

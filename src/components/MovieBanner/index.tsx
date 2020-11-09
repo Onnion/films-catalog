@@ -5,19 +5,22 @@ import { ConfigContext, ConfigContextProps } from '../../contexts/Config';
 
 export interface MovieBannerProps {
     readonly poster_path: string;
+    readonly detail?: boolean;
 }
 
 export const MovieBanner: React.FC<MovieBannerProps> = (props: MovieBannerProps) => {
     const POSTER_RESOLUTION_INDEX = 1;
     const { config } = useContext(ConfigContext) as ConfigContextProps;
-    const { poster_path } = props;
+    const { poster_path, detail } = props;
 
     function generatePosterPath(): string {
-        return `${config.baseImageURL}${config.configData.poster_sizes[POSTER_RESOLUTION_INDEX]}${poster_path}`;
+        const sizes = config.configData.poster_sizes;
+        const resolution_index = !detail ? POSTER_RESOLUTION_INDEX : sizes.length - 1;
+        return `${config.baseImageURL}${sizes[resolution_index]}${poster_path}`;
     }
 
     return (
-        <ThemeProvider theme={{ banner: generatePosterPath() }}>
+        <ThemeProvider theme={{ detail, banner: generatePosterPath() }}>
             <Banner />
         </ThemeProvider>
     );

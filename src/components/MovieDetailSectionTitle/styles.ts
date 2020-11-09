@@ -3,16 +3,16 @@ import styled from 'styled-components';
 export const Title = styled.div`
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    background: var(--main-color);
-    color: var(--secondary-color);
-    height: 4rem;
-    width: 100%;
+    justify-content: space-between;
 
-    & > h1 {
-        padding-left: 15px;
+    & > h2 {
+        color: var(--main-color);
         font-family: 'Abel', sans-serif;
         font-weight: 400;
+        font-size: 1.5rem;
+        flex: 1;
+        border-bottom: 2px solid var(--secondary-color);
+        margin-bottom: 15px;
     }
 `;
 
