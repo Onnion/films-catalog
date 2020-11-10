@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useEffect } from 'react';
+import { ConfigContext, ConfigContextProps } from './contexts/Config';
+import { MoviesContext, MoviesContextProps } from './contexts/Movies';
+import Routes from './routes';
+import { Body, MainContent, Title } from './styles';
 
-function App() {
+export const App: React.FC = () => {
+  const { config, loadConfig } = useContext(ConfigContext) as ConfigContextProps;
+  const { loadMovies } = useContext(MoviesContext) as MoviesContextProps;
+
+  async function initMovies() {
+    await loadConfig();
+    await loadMovies();
+  }
+
+  useEffect(() => {
+    if (!config.configData && !config.baseImageURL) {
+      initMovies();
+    }
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Body>
+      <MainContent>
+        <Title>
+          <h1>Movies</h1>
+        </Title>
+        < Routes />
+      </MainContent>
+    </Body>
+  )
 }
-
-export default App;

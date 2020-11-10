@@ -1,17 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { App } from './App';
+import ConfigProvider from './contexts/Config';
+import MoviesProvider from './contexts/Movies';
+
+interface ComposeProps {
+    components: Array<React.JSXElementConstructor<React.PropsWithChildren<any>>>
+    children: React.ReactNode
+}
+
+function Compose(props: ComposeProps) {
+    const { components = [], children } = props;
+
+    return (
+        <>
+            {components.reduceRight((acc, Comp) => {
+                return <Comp>{acc}</Comp>
+            }, children)}
+        </>
+    )
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Compose components={[ConfigProvider, MoviesProvider]}>
+        <App />
+    </Compose>,
+    document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
