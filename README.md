@@ -15,7 +15,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - react + typescript
 - react-router-dom
 - styled-components
-- axios
 
 ## External APIs
 
